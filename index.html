@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en-IE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Browse Irish state examination papers and marking schemes by year or maths topic.">
+<meta name="theme-color" content="#14352f">
+<title>Past Papers | Irish School Maths</title>
+<link rel="stylesheet" href="styles.css">
+<script defer src="catalog.js"></script>
+<script defer src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to papers</a>
+<header class="masthead"><div class="wrap mast-inner">
+  <div><a class="brand" href="https://ronandownes.github.io/book/mathematics-book.html">Irish School Maths</a>
+  <h1>Past papers</h1><p>Irish state exam papers, marking schemes and topic practice.</p></div>
+  <span class="mast-lines" aria-hidden="true"></span>
+</div></header>
+<main class="wrap" id="main">
+  <details class="help">
+    <summary>Opening and saving PDFs in Chrome</summary>
+    <ol>
+      <li>Paste <code>chrome://settings/content/pdfDocuments</code> into Chrome’s address bar. Choose <strong>Open PDFs in Chrome</strong> to read online, or <strong>Download PDFs</strong> to save automatically.</li>
+      <li>To save one PDF while reading it, use the download button in Chrome’s PDF toolbar.</li>
+      <li>Paste <code>chrome://settings/downloads</code> into the address bar. Under <strong>Location</strong>, select <strong>Change</strong> to pick a folder, or turn on <strong>Ask where to save each file before downloading</strong>.</li>
+      <li>These settings apply to the Chrome profile you are using.</li>
+    </ol>
+  </details>
+  <nav class="toolbar mode" aria-label="Browse papers">
+    <button type="button" data-mode="year" aria-pressed="true">By year</button>
+    <button type="button" data-mode="topic" aria-pressed="false">By topic</button>
+  </nav>
+  <section id="year-view" aria-label="Papers by year">
+    <div class="filters">
+      <label>Subject <select id="subject"></select></label>
+      <label>Level <select id="level"></select></label>
+      <label>Year <select id="year"></select></label>
+      <label>Show <select id="material"><option value="all">Papers and schemes</option><option value="paper">Papers</option><option value="scheme">Marking schemes</option></select></label>
+    </div>
+    <div class="results-head"><div><h2 id="year-title">Leaving Cert Maths</h2><p id="year-note"></p></div>
+      <div class="toolbar compact" aria-label="Layout">
+        <button type="button" data-layout="covers" aria-pressed="true">Covers</button>
+        <button type="button" data-layout="list" aria-pressed="false">List</button>
+      </div>
+    </div>
+    <p id="year-count" class="muted" aria-live="polite"></p>
+    <div id="years"></div>
+    <button type="button" id="older" class="more">Show older years</button>
+  </section>
+  <section id="topic-view" aria-label="Papers by topic" hidden>
+    <div class="filters">
+      <label>Course <select id="course"><option value="lc-maths">Leaving Cert Maths</option><option value="first">First-year Maths</option><option value="second">Second-year Maths</option><option value="jc-maths">Junior Cert Maths</option></select></label>
+      <label>Exam level <select id="topic-level"></select></label>
+      <label>Topic <select id="topic"></select></label>
+    </div>
+    <h2 id="topic-title">Questions by topic</h2>
+    <p id="topic-note"></p>
+    <p id="topic-count" class="muted" aria-live="polite"></p>
+    <div id="questions" class="question-grid"></div>
+  </section>
+</main>
+<dialog id="preview">
+  <div class="dialog-head"><h2 id="preview-title">Paper cover</h2><button id="close-preview" type="button">Close</button></div>
+  <p><a id="preview-link" target="_blank" rel="noopener">Open PDF in a new tab</a></p>
+  <iframe id="preview-pdf" title="First page of the exam paper"></iframe>
+</dialog>
+<footer class="wrap"><p>Sources <a href="https://www.examinations.ie/exammaterialarchive/">SEC Exam Material Archive</a> · <a href="https://archive.maths.nuim.ie/staff/dmalone/StateExamPapers/">Maynooth University archive</a> · <a href="https://www.betterexams.ie/">Better Exams index</a></p></footer>
+<noscript><p>Enable JavaScript to browse, or visit the <a href="https://www.examinations.ie/exammaterialarchive/">SEC Exam Material Archive</a>.</p></noscript>
+</body>
+</html>
