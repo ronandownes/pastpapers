@@ -6,16 +6,72 @@
 <meta name="description" content="Browse Irish state examination papers and marking schemes by year or maths topic.">
 <meta name="theme-color" content="#14352f">
 <title>Past Papers | Irish School Maths</title>
-<link rel="stylesheet" href="styles.css">
+<style>:root{color-scheme:light;--ink:#20252b;--blue:#165681;--line:#cbd5dc;--pale:#eef3f6}
+*{box-sizing:border-box}
+body{margin:0;background:white;color:var(--ink);font:14px/1.35 system-ui,sans-serif}
+[hidden]{display:none!important}
+.wrap{width:min(1320px,calc(100% - 24px));margin-inline:auto}
+a{color:var(--blue);text-underline-offset:.15em}
+a:hover{text-decoration-thickness:2px}
+button,select{font:inherit;color:inherit}
+button,select,summary{cursor:pointer}
+:focus-visible{outline:3px solid #a9570b;outline-offset:2px}
+.skip{position:absolute;top:-9rem;background:white;padding:.5rem;z-index:2}
+.skip:focus{top:0}
+.masthead{background:#f5f5f5;border-bottom:1px solid #d7d7d7}
+.mast-inner,.dots,.toolbar,.matrix-tools{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.mast-inner{padding-block:.65rem;gap:.65rem}
+.dots a{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;text-decoration:none;color:white;font-weight:680}
+.red{background:#e52c22}.green{background:#30833a}.blue{background:#286caa}.black{background:#181818}
+h1,h2,h3,p{margin-top:0}
+h1{font:700 1.55rem/1 Georgia,serif;color:var(--blue);margin:0}
+h2{font:700 1.25rem Georgia,serif;margin-bottom:.25rem}
+h3{font-size:.95rem;margin-bottom:.15rem}
+.help{border-bottom:1px solid var(--line);padding:.5rem 0;margin-bottom:.45rem}
+.help summary{color:var(--blue);font-weight:650}
+.help ol{margin:.4rem 0;padding-left:1.35rem}
+code{overflow-wrap:anywhere}
+.toolbar{gap:.15rem}
+.toolbar button,.more{padding:.2rem .5rem;border:1px solid var(--line);border-radius:3px;background:white;font-weight:620}
+.toolbar button[aria-pressed=true]{color:white;background:#20557b;border-color:#20557b}
+.mode{margin-bottom:.4rem}
+.matrix-tools{gap:.3rem 1rem}
+.legend,.muted,#topic-note{color:#53626b;font-size:.84rem;margin:.35rem 0}
+.matrix-scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px;line-height:1.28}
+th,td{border:1px solid var(--line);padding:.22rem .4rem;text-align:left}
+th{background:#e6edf1}
+th[scope=row]{width:4rem;font-variant-numeric:tabular-nums}
+tbody tr:nth-child(even) td{background:#f6f8fa}
+td a{display:inline-block;margin-right:.38rem;white-space:nowrap}
+.marking{font-weight:700;color:#245c41}
+.empty{color:#657781}
+.more{margin:.45rem 0}
+.filters{display:flex;gap:.55rem;flex-wrap:wrap;margin:.3rem 0 .55rem}
+.filters label{font-size:.88rem;font-weight:650}
+select{border:1px solid #8fa4b0;border-radius:3px;padding:.17rem .25rem;background:white}
+.question-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,245px),1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:.65rem}
+.question{min-width:0;background:#f8fafb;padding:.35rem .5rem}
+.question p{margin:.12rem 0}
+.question a+a{margin-left:.45rem}
+.doc-meta{font-size:.82rem;color:#53626b}
+.doc-link{font-weight:620}
+footer{margin-top:.65rem;border-top:1px solid var(--line);padding:.45rem 0;color:#53626b;font-size:.83rem}
+
+.topic-links{display:flex;flex-wrap:wrap;gap:.3rem .8rem;margin:0 0 .55rem}.dots a{width:24px;height:24px}.red{background:#e63329}.green{background:#3fae49}.blue{background:#2d7dd2}.black{background:#1a1a1a}</style>
 <script defer src="catalog.js"></script>
-<script defer src="app.js"></script>
+
 </head>
 <body>
 <a class="skip" href="#main">Skip to papers</a>
 <header class="masthead"><div class="wrap mast-inner">
-  <div><a class="brand" href="https://ronandownes.github.io/book/mathematics-book.html">Irish School Maths</a>
-  <h1>Past papers</h1><p>Irish state exam papers, marking schemes and topic practice.</p></div>
-  <span class="mast-lines" aria-hidden="true"></span>
+  <nav class="dots" aria-label="Irish School Maths">
+    <a class="red" href="https://ronandownes.github.io/maths/" aria-label="A · Apps" title="A · Apps"></a>
+    <a class="green" href="https://ronandownes.github.io/book/" aria-label="B · Book" title="B · Book"></a>
+    <a class="blue" href="https://ronandownes.github.io/calculator/" aria-label="C · Calculator" title="C · Calculator"></a>
+    <a class="black" href="./" aria-label="PP · Past Papers" title="PP · Past Papers" aria-current="page"></a>
+  </nav>
+  <h1>Past Papers</h1>
 </div></header>
 <main class="wrap" id="main">
   <details class="help">
@@ -31,21 +87,21 @@
     <button type="button" data-mode="year" aria-pressed="true">By year</button>
     <button type="button" data-mode="topic" aria-pressed="false">By topic</button>
   </nav>
+  <nav class="topic-links" aria-label="Jump to a topic"><a href="topics.html#sets">Sets</a><a href="topics.html#factorising">Factorising</a><a href="topics.html#expanding">Expanding</a><a href="topics.html#number">Number</a><a href="topics.html#probability">Probability</a><a href="topics.html#complex-numbers">Complex Numbers</a></nav>
   <section id="year-view" aria-label="Papers by year">
-    <div class="filters">
-      <label>Subject <select id="subject"></select></label>
-      <label>Level <select id="level"></select></label>
-      <label>Year <select id="year"></select></label>
-      <label>Show <select id="material"><option value="all">Papers and schemes</option><option value="paper">Papers</option><option value="scheme">Marking schemes</option></select></label>
-    </div>
-    <div class="results-head"><div><h2 id="year-title">Leaving Cert Maths</h2><p id="year-note"></p></div>
-      <div class="toolbar compact" aria-label="Layout">
-        <button type="button" data-layout="covers" aria-pressed="true">Covers</button>
-        <button type="button" data-layout="list" aria-pressed="false">List</button>
+    <div class="matrix-tools">
+      <div id="exam-group" class="toolbar" aria-label="Examination">
+        <button type="button" data-group="lc" aria-pressed="true">Leaving Cert</button>
+        <button type="button" data-group="jc" aria-pressed="false">Junior Cert</button>
+      </div>
+      <div class="toolbar" aria-label="Document type">
+        <button type="button" data-material="all" aria-pressed="true">All</button>
+        <button type="button" data-material="paper" aria-pressed="false">Papers</button>
+        <button type="button" data-material="scheme" aria-pressed="false">Marking schemes</button>
       </div>
     </div>
-    <p id="year-count" class="muted" aria-live="polite"></p>
-    <div id="years"></div>
+    <p class="legend">P = paper · MS = marking scheme · † = archive link. Use <strong>Marking schemes</strong> for a compact download list.</p>
+    <div class="matrix-scroll" tabindex="0" aria-label="Scrollable exam table"><table id="paper-table"></table></div>
     <button type="button" id="older" class="more">Show older years</button>
   </section>
   <section id="topic-view" aria-label="Papers by topic" hidden>
@@ -60,12 +116,198 @@
     <div id="questions" class="question-grid"></div>
   </section>
 </main>
-<dialog id="preview">
-  <div class="dialog-head"><h2 id="preview-title">Paper cover</h2><button id="close-preview" type="button">Close</button></div>
-  <p><a id="preview-link" target="_blank" rel="noopener">Open PDF in a new tab</a></p>
-  <iframe id="preview-pdf" title="First page of the exam paper"></iframe>
-</dialog>
 <footer class="wrap"><p>Sources <a href="https://www.examinations.ie/exammaterialarchive/">SEC Exam Material Archive</a> · <a href="https://archive.maths.nuim.ie/staff/dmalone/StateExamPapers/">Maynooth University archive</a> · <a href="https://www.betterexams.ie/">Better Exams index</a></p></footer>
 <noscript><p>Enable JavaScript to browse, or visit the <a href="https://www.examinations.ie/exammaterialarchive/">SEC Exam Material Archive</a>.</p></noscript>
+<script>document.addEventListener("DOMContentLoaded", () => {
+'use strict';
+
+const courseTopics = {
+  first: ['Natural Numbers', 'Integers', 'Rational Numbers', 'Decimals and Percentages', 'Sets'],
+  second: ['Sets', 'Basic Geometry', 'Algebra', 'Applied Arithmetic', 'Distance, Speed, Time and Real-Life Graphs']
+};
+const $ = id => document.getElementById(id);
+const course = $('course');
+const topicLevel = $('topic-level');
+const topic = $('topic');
+let examGroup = 'lc';
+let material = 'all';
+let cutoff = 2015;
+
+const columns = {
+  lc: [
+    ['Maths · Ordinary','lc-maths','Ordinary'],
+    ['Maths · Higher','lc-maths','Higher'],
+    ['Maths · Foundation','lc-maths','Foundation'],
+    ['Computer Science','lc-computing'],
+    ['Physics','lc-physics'],
+    ['Applied Maths','lc-applied']
+  ],
+  jc: [
+    ['Maths · Ordinary','jc-maths','Ordinary'],
+    ['Maths · Higher','jc-maths','Higher'],
+    ['Science','jc-science']
+  ]
+};
+
+function options(select, pairs, preferred) {
+  select.replaceChildren(...pairs.map(([value, label]) => new Option(label, value)));
+  if (pairs.some(([value]) => value === preferred)) select.value = preferred;
+}
+
+function element(tag, text, className) {
+  const node = document.createElement(tag);
+  if (text) node.textContent = text;
+  if (className) node.className = className;
+  return node;
+}
+
+function link(text, url) {
+  const anchor = element('a', text, 'doc-link');
+  anchor.href = url;
+  anchor.target = '_blank';
+  anchor.rel = 'noopener';
+  return anchor;
+}
+
+function sourceFor(subjectId, examYear, examLevel, paper, kind) {
+  const documents = (catalog.subjects[subjectId] || []).filter(([y, l, label, type]) =>
+    y === examYear && l === examLevel && type === kind && !label.includes('deferred'));
+  const target = paper === 'Single paper' ? 'Paper' : paper;
+  return documents.find(([, , label]) => label.endsWith(target)) ||
+    (kind === 'scheme' && documents.find(([, , label]) => label === 'Marking scheme'));
+}
+
+function shortLabel(label, kind) {
+  if (label.includes('Paper 1')) return kind === 'scheme' ? 'MS1' : 'P1';
+  if (label.includes('Paper 2')) return kind === 'scheme' ? 'MS2' : 'P2';
+  if (label.includes('Sections A & B')) return 'A+B';
+  if (label.includes('Section C')) return 'C';
+  return kind === 'scheme' ? 'MS' : 'P';
+}
+
+function renderYears() {
+  const active = columns[examGroup];
+  const datasets = active.map(([, subject, level]) => {
+    const groups = new Map();
+    for (const row of catalog.subjects[subject]) {
+      const [year, examLevel, label, kind] = row;
+      if (year < cutoff || (level && level !== examLevel) ||
+          (material !== 'all' && material !== kind) || label.includes('deferred')) continue;
+      if (!groups.has(year)) groups.set(year, []);
+      groups.get(year).push(row);
+    }
+    return groups;
+  });
+  const table = $('paper-table');
+  const header = element('tr');
+  for (const title of ['Year', ...active.map(column => column[0])]) {
+    const cell = element('th', title);
+    cell.scope = 'col';
+    header.append(cell);
+  }
+  const thead = element('thead');
+  thead.append(header);
+  const tbody = element('tbody');
+  const years = [...new Set(datasets.flatMap(group => [...group.keys()]))].sort((a,b) => b-a);
+  for (const year of years) {
+    const row = element('tr');
+    const heading = element('th', String(year));
+    heading.scope = 'row';
+    row.append(heading);
+    for (const [index, group] of datasets.entries()) {
+      const cell = element('td');
+      const docs = group.get(year) || [];
+      const multipleLevels = new Set(docs.map(r => r[1])).size > 1;
+      for (const [, level, label, kind, url, source] of docs) {
+        const prefix = multipleLevels && level !== 'Unspecified' ? level[0] + ' ' : '';
+        const name = prefix + shortLabel(label, kind) + (source === 'SEC' ? '' : '†');
+        const anchor = link(name, url);
+        const description = [year, active[index][0], level, label, source].join(' · ');
+        anchor.title = description;
+        anchor.setAttribute('aria-label', description);
+        if (kind === 'scheme') anchor.classList.add('marking');
+        cell.append(anchor);
+      }
+      if (!docs.length) cell.append(element('span', '—', 'empty'));
+      row.append(cell);
+    }
+    tbody.append(row);
+  }
+  table.replaceChildren(thead, tbody);
+  $('older').hidden = cutoff <= 1992;
+}
+
+function topicRows() {
+  const current = course.value;
+  return catalog.topics.filter(row => {
+    if (courseTopics[current]) return row[0] === 'jc-maths' && courseTopics[current].includes(row[5]);
+    return row[0] === current;
+  });
+}
+
+function refreshTopics() {
+  const current = course.value;
+  const levels = current === 'lc-maths' ? [['Ordinary', 'Ordinary']] :
+    [['all', 'Both levels'], ['Ordinary', 'Ordinary'], ['Higher', 'Higher']];
+  options(topicLevel, levels, topicLevel.value);
+  const names = courseTopics[current] || [...new Set(topicRows().map(row => row[5]))].sort();
+  options(topic, [['all', 'All topics'], ...names.map(name => [name, name])], topic.value);
+  renderTopics();
+}
+
+function renderTopics() {
+  const items = topicRows().filter(row =>
+    (topicLevel.value === 'all' || topicLevel.value === row[2]) &&
+    (topic.value === 'all' || topic.value === row[5])).sort((a, b) => b[1] - a[1]);
+  $('topic-title').textContent = course.selectedOptions[0].textContent + ' by topic';
+  $('topic-note').textContent = courseTopics[course.value]
+    ? 'Topic names follow the class scheme of work. Levels refer to the source Junior Cycle exam.'
+    : 'Choose a topic, attempt a question, then check the official marking scheme where available.';
+  $('topic-count').textContent = items.length ? items.length + ' question references' : 'This topic has no indexed questions for the selected level yet.';
+  $('questions').replaceChildren(...items.map(([s, y, l, paper, number, name, detail, page, fallback, schemePage]) => {
+    const card = element('article', '', 'question');
+    const original = sourceFor(s, y, l, paper, 'paper');
+    const scheme = sourceFor(s, y, l, paper, 'scheme');
+    const reference = paper === 'Single paper' ? number : paper + ' · ' + number;
+    card.append(element('p', y + ' · ' + l + ' · ' + reference, 'doc-meta'),
+      element('h3', name), element('p', detail));
+    const url = original ? original[4] + (page ? '#page=' + page : '') : fallback;
+    if (url) card.append(link(page ? 'Open question page' : 'Open paper', url));
+    if (scheme) card.append(link(schemePage ? 'Open marking page' : 'Marking scheme',
+      scheme[4] + (schemePage ? '#page=' + schemePage : '')));
+    return card;
+  }));
+}
+
+document.querySelectorAll('[data-mode]').forEach(button => {
+  button.onclick = () => {
+    document.querySelectorAll('[data-mode]').forEach(candidate =>
+      candidate.setAttribute('aria-pressed', String(candidate === button)));
+    $('year-view').hidden = button.dataset.mode !== 'year';
+    $('topic-view').hidden = button.dataset.mode !== 'topic';
+  };
+});
+function bindChoice(attribute, update) {
+  const buttons = document.querySelectorAll('[data-' + attribute + ']');
+  buttons.forEach(button => {
+    button.onclick = () => {
+      for (const candidate of buttons) candidate.setAttribute('aria-pressed', String(candidate === button));
+      update(button.dataset[attribute]);
+      renderYears();
+    };
+  });
+}
+bindChoice('group', value => { examGroup = value; });
+bindChoice('material', value => { material = value; });
+$('older').onclick = () => {
+  cutoff = Math.max(1992, cutoff - 10);
+  renderYears();
+};
+course.onchange = () => { topic.value = 'all'; refreshTopics(); };
+topic.onchange = topicLevel.onchange = renderTopics;
+renderYears();
+refreshTopics();
+
+});</script>
 </body>
 </html>
