@@ -1,0 +1,31 @@
+name: Import verified exam papers
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [data/import-papers.json]
+permissions:
+  contents: write
+concurrency:
+  group: archive-import
+  cancel-in-progress: false
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Verify PDF editions and build the on-site index
+        run: python3 scripts/import-papers.py
+      - name: Save newly hosted copies
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add documents hosted.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'Host verified examination papers and marking schemes'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
